@@ -46,7 +46,6 @@ function EpisodesList ({ episodes }) {
             <div className={titleStyle}>
               <Circle number={episode} /> {title}
             </div>
-            <TorrentList torrents={torrents} />
           </div>
         )
       })}
