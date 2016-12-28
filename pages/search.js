@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 
 // Utilities
 import fetch from 'isomorphic-fetch'
+import { stringify } from 'qs'
 
 // Components
 import Link from 'next/link'
@@ -13,11 +14,15 @@ import Navigation from '../components/navigation'
 // Global styles
 import GlobalStyles from '../helpers/globalStyles'
 
-class Shows extends Component {
-  static async getInitialProps ({ query: { page } }) {
-    const requestPage = page > 0 ? page : 1
-    const res = await fetch(`https://api-fetch.website/tv/shows/${requestPage}`)
-    const shows = await res.json()
+class Search extends Component {
+  static async getInitialProps ({ query: { search, page } }) {
+    const searchQuery = stringify({
+      page,
+      type: 'series',
+      s: search
+    })
+    const res = await fetch(`http://www.omdbapi.com/?${searchQuery}`)
+    const { Search: shows = [] } = await res.json()
     return { shows }
   }
 
@@ -29,7 +34,7 @@ class Shows extends Component {
   }
 
   render () {
-    const { shows, url: { query: { page } } } = this.props
+    const { shows, url: { query: { search, page } } } = this.props
 
     return (
       <div>
@@ -47,16 +52,16 @@ class Shows extends Component {
         </Flex>
         <Flex p={1} justify="center" wrap>
           {shows.map(show => (
-            <Box px={1} key={show._id}>
-              <Link href={`/show?id=${show._id}`} className="link">
-                <ShowCard image={show.images.poster} />
+            <Box px={1} key={show.imdbID}>
+              <Link href={`/show?id=${show.imdbID}`} className="link">
+                <ShowCard image={show.Poster} />
               </Link>
             </Box>
           ))}
         </Flex>
         <Flex p={1} justify="center" wrap>
           <Box>
-            <Navigation url="/?page=" page={parseInt(page)} />
+            <Navigation url={`/search?search=${search}&page=`} page={parseInt(page)} />
           </Box>
         </Flex>
         <Flex p={1} justify="center" wrap>
@@ -91,4 +96,4 @@ class Shows extends Component {
   }
 }
 
-export default Shows
+export default Search
