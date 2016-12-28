@@ -1,23 +1,26 @@
 import React from 'react'
 
-// Utilities
-import css from 'next/css'
-
 function SeasonsList ({ seasons, currentSeason, clickHandler }) {
   return (
     <div>
       {Object.keys(seasons).map(season => {
-        const style = css({
-          cursor: 'pointer',
-          borderBottom: currentSeason === season && '1px solid #fff',
-          paddingBottom: currentSeason !== season && '1px',
-          marginBottom: '10px',
-          fontSize: '20px'
-        })
-
+        const activeClass = currentSeason === season ? 'active' : ''
         return (
-          <div key={season} onClick={clickHandler(season)} className={style}>
+          <div key={season} onClick={clickHandler(season)} className={activeClass}>
             Season {season}
+            <style jsx>{`
+              div {
+                cursor: pointer;
+                padding-bottom: 1px;
+                margin-bottom: 10px;
+                font-size: 20px;
+              }
+
+              div.active {
+                border-bottom: 1px solid #fff;
+                padding-bottom: 0px;
+              }
+            `}</style>
           </div>
         )
       })}

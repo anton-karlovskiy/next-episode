@@ -1,11 +1,18 @@
 import React from 'react'
-import css from 'next/css'
 
 function ShowImage ({src, fullWidth, preview}) {
-  const image = preview ? src.replace('/fanart/tv/', '/preview/tv/') : src
-  const imageStyle = fullWidth ? css({ width: '100%' }) : false
+  const className = fullWidth ? 'fullwidth' : false
 
-  return <img className={imageStyle} src={image} />
+  return (
+    <span>
+      <img src={src} className={className} />
+      <style jsx>{`
+        .fullwidth {
+          width: 100%;
+        }
+      `}</style>
+    </span>
+  )
 }
 
 ShowImage.propTypes = {

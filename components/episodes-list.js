@@ -1,8 +1,5 @@
 import React from 'react'
 
-// Utilities
-import css from 'next/css'
-
 // Components
 import { Button, Tooltip } from 'rebass'
 import Circle from './circle'
@@ -12,15 +9,15 @@ function TorrentList ({ torrents }) {
     <div>
       {Object.keys(torrents).map(format => {
         const { url, peers, seeds } = torrents[format]
-        const linkStyle = css({marginRight: '15px'})
 
         return (
-          <a href={url} className={linkStyle} key={format}>
+          <a href={url} key={format}>
             <Tooltip title={`Peers: ${peers} / Seeds: ${seeds}`}>
               <Button backgroundColor="primary" color="white">
                 {format}
               </Button>
             </Tooltip>
+            <style jsx>{`a { margin-right: 15px; }`}</style>
           </a>
         )
       })}
@@ -37,18 +34,25 @@ function EpisodesList ({ episodes }) {
   return (
     <div>
       {episodeIds.map(episodeId => {
-        const { episode, title, torrents } = episodes[episodeId]
-        const wrapperStyle = css({marginBottom: '30px'})
-        const titleStyle = css({marginBottom: '15px'})
+        const { episode, title } = episodes[episodeId]
 
         return (
-          <div key={episodeId} className={wrapperStyle}>
-            <div className={titleStyle}>
+          <div key={episodeId} className="wrapper">
+            <div className="title">
               <Circle number={episode} /> {title}
             </div>
           </div>
         )
       })}
+      <style jsx>{`
+        .wrapper {
+          margin-bottom: 30px;
+        }
+
+        .title {
+          margin-bottom: 15px;
+        }
+      `}</style>
     </div>
   )
 }

@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 
 // Utilities
 import fetch from 'isomorphic-fetch'
-import css from 'next/css'
 
 // Components
 import Link from 'next/link'
@@ -12,7 +11,7 @@ import ShowCard from '../components/show-card'
 import Navigation from '../components/navigation'
 
 // Global styles
-import '../helpers/globalStyles'
+import GlobalStyles from '../helpers/globalStyles'
 
 class Shows extends Component {
   static async getInitialProps ({ query: { page } }) {
@@ -31,21 +30,14 @@ class Shows extends Component {
 
   render () {
     const { shows, url: { query: { page } } } = this.props
-    const linkStyle = css({
-      color: '#111',
-      textDecoration: 'none'
-    })
-    const githubLinkStyle = css({
-      display: 'block',
-      marginTop: '50px'
-    })
 
     return (
       <div>
+        <GlobalStyles />
         <Flex p={1} justify="center" wrap>
           {shows.map(show => (
             <Box px={1} key={show._id}>
-              <Link href={`/show?id=${show._id}`} className={linkStyle}>
+              <Link href={`/show?id=${show._id}`} className="link">
                 <ShowCard image={show.images.poster} />
               </Link>
             </Box>
@@ -59,11 +51,22 @@ class Shows extends Component {
         <Flex p={1} justify="center" wrap>
           <Box>
             <a href="https://www.github.com/timneutkens/next-episode"
-               className={githubLinkStyle}>
+               className="github-link">
               <Button>Github.com</Button>
             </a>
           </Box>
         </Flex>
+        <style jsx>{`
+          .link {
+            color: #111;
+            text-decoration: none;
+          }
+
+          .github-link {
+            display: block;
+            margin-top: 50px;
+          }
+        `}</style>
       </div>
     )
   }

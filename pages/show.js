@@ -2,7 +2,6 @@ import React, {Component} from 'react'
 
 // Utilities
 import fetch from 'isomorphic-fetch'
-import css from 'next/css'
 
 // Components
 import { Stat, Container, Banner } from 'rebass'
@@ -11,7 +10,7 @@ import SeasonsList from '../components/seasons-list'
 import EpisodesList from '../components/episodes-list'
 
 // Global styles
-import '../helpers/globalStyles'
+import GlobalStyles from '../helpers/globalStyles'
 
 function createEpisodeInSeason (seasons, episode) {
   return {...(seasons[episode.season] || {}), [episode.episode]: episode}
@@ -73,7 +72,8 @@ class Show extends Component {
     const currentEpisodes = seasons[currentSeason]
     return (
       <div>
-        <div className={css({backgroundImage: `url(${show.images.banner})`, backgroundSize: 'cover', backgroundPosition: 'center'})}>
+        <GlobalStyles />
+        <div style={{backgroundImage: `url(${show.images.banner})`}} className="show-banner">
           <Banner align="center" style={{backgroundColor: 'rgba(51,51,51,0.8)'}}>
             <h1>{show.title}</h1>
             <Flex>
@@ -88,7 +88,7 @@ class Show extends Component {
         <Container>
           <Flex>
             <Box>
-              <div className={css({marginRight: '50px'})}>
+              <div className="season-list">
                 <SeasonsList seasons={seasons}
                              currentSeason={currentSeason}
                              clickHandler={this.setSeason} />
@@ -99,6 +99,16 @@ class Show extends Component {
             </Box>
           </Flex>
         </Container>
+        <style jsx>{`
+          .show-banner {
+            background-size: cover;
+            background-position: center;
+          }
+
+          .season-list {
+            margin-right: 50px;
+          }
+        `}</style>
       </div>
     )
   }

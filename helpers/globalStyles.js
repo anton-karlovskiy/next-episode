@@ -1,10 +1,21 @@
-import { insertGlobal } from 'next/css'
+import React from 'react'
 
-insertGlobal('*', {boxSizing: 'border-box'})
-insertGlobal('body', {
-  backgroundColor: '#333',
-  margin: 0,
-  color: '#fff',
-  fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif',
-  marginBottom: '100px'
-})
+export default function GlobalStyles () {
+  return (
+    <div>
+      <style jsx global>{`
+        * {
+          box-sizing: border-box;
+        }
+
+        body {
+          background-color: #333;
+          margin: 0;
+          color: #fff;
+          font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+          margin-bottom: 100px;
+        }
+      `}</style>
+    </div>
+  )
+}
