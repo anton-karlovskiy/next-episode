@@ -39,7 +39,7 @@ class Shows extends Component {
             <h1>{shows.length > 0 ? 'Search' : 'No results found'}</h1>
             <form method="GET" action="/search">
               <div className="search-input">
-                <Input name="search" />
+                <Input label="" name="search" />
               </div>
               <Button>Submit</Button>
             </form>
