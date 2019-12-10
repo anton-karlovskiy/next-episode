@@ -21,7 +21,7 @@ class Search extends Component {
       type: 'series',
       s: search
     })
-    const res = await fetch(`http://www.omdbapi.com/?${searchQuery}`)
+    const res = await fetch(`http://www.omdbapi.com/?apikey=b1bb12a0&${searchQuery}`)
     const { Search: shows = [] } = await res.json()
     return { shows }
   }
